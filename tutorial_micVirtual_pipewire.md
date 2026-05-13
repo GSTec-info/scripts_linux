@@ -67,7 +67,7 @@ systemctl –user status mic-virtual
 
 #### PARTE 2 — Direcionar o Audio Monitor do OBS para o mic virtual
 
-Por padrão, o plugin “Audio Monitor” do OBS envia o áudio para o alto-falante/fone. Esta regra força o envio para o mic virtual.
+Por padrão, o plugin "Audio Monitor" do OBS envia o áudio para o alto-falante/fone. Esta regra força o envio para o mic virtual.
 
 4 - Crie a pasta de configuração (se não existir) e o arquivo de regras:
 
@@ -110,14 +110,14 @@ systemctl –user restart mic-virtual
 
 No OBS:
 
-- Instale o plugin “Audio Monitor” se ainda não tiver
-- No menu de painéis, adicione o painel “Monitor de Audio” e encaixe na interface
-- No botão de configurações do plugin, vá em “Saídas” -> “Faixa 1”
-- Selecione o “Microfone Virtual”
+- Instale o plugin "Audio Monitor" se ainda não tiver
+- No menu de painéis, adicione o painel "Monitor de Audio" e encaixe na interface
+- No botão de configurações do plugin, vá em "Saídas" -> “Faixa 1”
+- Selecione o "Microfone Virtual"
 
 No Google Meet (ou qualquer app de videoconferência):
 
-- Microfone → selecione “Microfone Virtual Source”
+- Microfone → selecione "Microfone Virtual Source"
 
 #### OBSERVAÇÕES
 
@@ -125,3 +125,11 @@ No Google Meet (ou qualquer app de videoconferência):
 - Para monitorar o que está sendo enviado, use o monitor nativo do
   OBS (isso não interfere no que o Meet recebe)
 - Para ver o roteamento de áudio visualmente: instale o qpwgraph ou o Helvum
+- Se o mic virtual não funcionar após a reinicialização do sistema, coloque esse script pra iniciar junto com o sistema, para reiniciar o PipeWire e o Mic-Virtual:
+~~~bash
+#!/bin/bash
+sleep 3
+systemctl --user restart pipewire pipewire-pulse
+sleep 3
+systemctl --user restart mic-virtual
+~~~
