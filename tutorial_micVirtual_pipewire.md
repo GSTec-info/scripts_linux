@@ -32,8 +32,8 @@ Wants=pipewire.service
 
 [Service]
 ExecStart=pw-loopback \
-–capture-props=‘media.class=Audio/Sink node.name=mic-virtual node.description=“Microfone Virtual”’ \
-–playback-props=‘media.class=Audio/Source node.name=mic-virtual-source node.description=“Microfone Virtual Source”’
+–capture-props='media.class=Audio/Sink node.name=mic-virtual node.description="Microfone Virtual"' \
+–playback-props='media.class=Audio/Source node.name=mic-virtual-source node.description="Microfone Virtual Source"'
 Restart=on-failure
 
 [Install]
@@ -45,6 +45,9 @@ EOF
 
 ~~~bash
 systemctl –user daemon-reload
+~~~
+
+~~~bash
 systemctl –user enable –now mic-virtual.service
 ~~~
 
@@ -64,8 +67,7 @@ systemctl –user status mic-virtual
 
 #### PARTE 2 — Direcionar o Audio Monitor do OBS para o mic virtual
 
-Por padrão, o plugin “Audio Monitor” do OBS envia o áudio para o
-alto-falante/fone. Esta regra força o envio para o mic virtual.
+Por padrão, o plugin “Audio Monitor” do OBS envia o áudio para o alto-falante/fone. Esta regra força o envio para o mic virtual.
 
 4 - Crie a pasta de configuração (se não existir) e o arquivo de regras:
 
@@ -80,8 +82,6 @@ context.modules = [
         name = libpipewire-module-link-factory
     }
 ]
-
-
 context.rules = [
     {
         matches = [{ node.name = "OBS-Monitor" }]
@@ -89,7 +89,9 @@ context.rules = [
             create-links = {
                 audio.position = [ FL FR ]
                 node.target = "mic-virtual"
-    }}}
+            }
+        }
+    }
 ]
 EOF
 ~~~
@@ -104,9 +106,7 @@ systemctl –user restart pipewire pipewire-pulse
 systemctl –user restart mic-virtual
 ~~~
 
-
 ### PARTE 3 — Configurar o OBS e o Google Meet
-
 
 No OBS:
 
@@ -119,9 +119,7 @@ No Google Meet (ou qualquer app de videoconferência):
 
 - Microfone → selecione “Microfone Virtual Source”
 
-
 #### OBSERVAÇÕES
-
 
 - O serviço sobe automaticamente com o sistema a partir de agora
 - Para monitorar o que está sendo enviado, use o monitor nativo do
