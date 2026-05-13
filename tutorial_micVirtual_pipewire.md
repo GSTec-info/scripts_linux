@@ -1,3 +1,5 @@
+# === Criar cabo de microfone virtual com PipeWire ======
+
 Para uso com o plugin “Audio Monitor” no OBS Studio
 
 PRÉ-REQUISITOS: PipeWire como servidor de áudio (padrão na maioria das distros modernas)
